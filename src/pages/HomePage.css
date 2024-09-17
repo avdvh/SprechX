@@ -1,0 +1,81 @@
+.homepage {
+    font-family: Arial, sans-serif;
+    color: #333;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  
+  .homepage-header {
+    padding: 50px 20px;
+    background-color: #282c34;
+    color: white;
+  }
+  
+  .homepage-logo {
+    width: 100px;
+    height: auto;
+  }
+  
+  .homepage-header h1 {
+    margin: 20px 0;
+    font-size: 2.5rem;
+  }
+  
+  .homepage-header p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+  }
+  
+  .connect-wallet-button {
+    background-color: #61dafb;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .connect-wallet-button:hover {
+    background-color: #21a1f1;
+  }
+  
+  .homepage-content {
+    position: relative;
+    text-align: center;
+  }
+  
+  .homepage-background {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+  }
+  
+  .homepage-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .homepage-overlay h2 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  .homepage-overlay p {
+    font-size: 1.2rem;
+  }
+  
+  .homepage-footer {
+    padding: 20px;
+    background-color: #282c34;
+    color: white;
+  }
+  
