@@ -1,0 +1,95 @@
+/* General Styling */
+.profile-page {
+    background-color: #000000; /* Dark background to match the theme */
+    color: #fff; /* White text color */
+    padding: 20px; /* Padding for content */
+    max-width: 1200px; /* Max width for the profile page */
+    margin: auto; /* Center the page */
+    border-radius: 10px; /* Rounded corners */
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 2px solid #4caf50; /* Green accent color */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Circle shape */
+    object-fit: cover; /* Ensure the image covers the circle */
+    border: 2px solid #4caf50; /* Green border */
+  }
+  
+  .profile-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Profile Information */
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .profile-detail {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .detail-label {
+    font-weight: bold;
+  }
+  
+  .detail-value {
+    margin-top: 5px;
+    font-size: 1.1rem;
+  }
+  
+  .edit-button {
+    background-color: #4caf50; /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .profile-header {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .profile-picture {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .profile-name {
+      font-size: 1.5rem;
+    }
+  
+    .edit-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
