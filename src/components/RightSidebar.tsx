@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react';
+import React, { createContext, useState, ReactNode, useContext, useEffect, useCallback } from 'react';
 
 type TrendingContextType = {
   topics: string[];
@@ -21,10 +21,11 @@ const TrendingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
   };
 
-  const refreshTopics = async () => {
+  // Wrap refreshTopics in useCallback to prevent it from being recreated on every render
+  const refreshTopics = useCallback(async () => {
     const newTopics = await fetchTrendingTopics();
     setTopics(newTopics);
-  };
+  }, []); // Empty dependency array means this function will only be created once
 
   const addTopic = (topic: string) => {
     setTopics((prevTopics) => [...prevTopics, topic]);
@@ -36,7 +37,7 @@ const TrendingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     refreshTopics();
-  }, [refreshTopics]);  // Add refreshTopics to the dependency array
+  }, [refreshTopics]); // Now refreshTopics is stable and can be safely added to the dependency array
 
   return (
     <TrendingContext.Provider value={{ topics, setTopics, refreshTopics, addTopic, removeTopic }}>
