@@ -1,41 +1,40 @@
 import React, { useState } from 'react';
 import './Header.css';
 import { FaSearch } from 'react-icons/fa';
-import { ethers } from 'ethers';
+
+import Deso from 'deso-protocol';
+
 
 const Header: React.FC = () => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+
   const connectWallet = async () => {
     try {
-      if (window.ethereum) {
-        // Request wallet connection
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        await provider.send('eth_requestAccounts', []); // Trigger MetaMask to connect
-        const signer = provider.getSigner();
-        const address = await signer.getAddress();
-        setWalletConnected(true);
-        setWalletAddress(address); // Store the connected wallet address
-        console.log('Wallet connected:', address);
-      } else {
-        console.error('MetaMask not detected');
-        alert('Please install MetaMask to connect your wallet.');
-      }
+      const response = await desoInstance.identity.login();
+      const address = response.key;
+      setWalletConnected(true);
+      setWalletAddress(address);
+      console.log('Wallet connected:', address);
     } catch (error) {
       console.error('Error connecting wallet:', error);
     }
   };
 
-  const disconnectWallet = () => {
-    setWalletConnected(false);
-    setWalletAddress(null);
-    console.log('Wallet disconnected');
+  const disconnectWallet = async () => {
+    try {
+      await desoInstance.identity.logout();
+      setWalletConnected(false);
+      setWalletAddress(null);
+      console.log('Wallet disconnected');
+    } catch (error) {
+      console.error('Error disconnecting wallet:', error);
+    }
   };
 
   const handleSearch = () => {
-    // Handle search logic here
     console.log('Search term:', searchTerm);
   };
 
@@ -66,7 +65,6 @@ const Header: React.FC = () => {
           ) : (
             'Connect Wallet'
           )}
-          {walletConnected && <span className="disconnect-text">Disconnect Wallet</span>}
         </button>
       </div>
     </header>
