@@ -1,20 +1,51 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CentralFeed from './components/CentralFeed'; 
-import Dashboard from './pages/Dashboard';
-import AboutPage from './pages/AboutPage';
+import React, { Suspense, Component, ReactNode } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+
+// Lazy loading components
+const CentralFeed = React.lazy(() => import('./components/CentralFeed'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const AboutPage = React.lazy(() => import('./pages/AboutPage'));
+
+// Error boundary component for handling lazy load errors
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div>Something went wrong. Please try again later.</div>;
+    }
+
+    return this.props.children;
+  }
+}
 
 const App: React.FC = () => {
   return (
     <Router>
       <Header />
-      <Routes>
-        <Route path="/" element={<CentralFeed />} /> {/* Updated route */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
+      <ErrorBoundary>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<CentralFeed />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} /> {/* Redirect unmatched paths */}
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
       <Footer />
     </Router>
   );

@@ -1,33 +1,60 @@
 import React, { useState } from 'react';
-import { FaSmile, FaHeart, FaComment, FaShare, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+import {
+  FaSmile,
+  FaHeart,
+  FaComment,
+  FaShare,
+  FaThumbsDown,
+} from 'react-icons/fa';
 import './CentralFeed.css';
-import LeftSidebar from '../components/LeftSidebar'; // Import LeftSidebar component
-import RightSidebar from '../components/RightSidebar'; // Import RightSidebar component
-import * as Deso from 'deso-protocol';
+import LeftSidebar from '../components/LeftSidebar';
+import { RightSidebar } from '../components/RightSidebar';
+
+interface Comment {
+  id: number;
+  content: string;
+  author: string;
+}
+
+interface Post {
+  id: number;
+  content: string;
+  author: {
+    walletAddress: string;
+    profilePicture: string;
+  };
+  likes: number;
+  dislikes: number;
+  likedBy: string[];
+  dislikedBy: string[];
+  comments: number;
+  commentList: Comment[];
+}
 
 const CentralFeed: React.FC = () => {
   const [postContent, setPostContent] = useState('');
-  const [posts, setPosts] = useState<any[]>([]);
-  const [commentInput, setCommentInput] = useState<string>(''); // For capturing comment input
-  const [commentBoxVisible, setCommentBoxVisible] = useState<any>({}); // To manage visibility of comment input per post
-  const userWalletAddress = '0x1234567890abcdef'; // Replace with the actual user wallet address
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [commentInputState, setCommentInputState] = useState<Record<number, string>>({});
+  const [commentBoxVisible, setCommentBoxVisible] = useState<Record<number, boolean>>({});
+  const userWalletAddress = '0x1234567890abcdef';
 
   const handlePostChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPostContent(e.target.value);
   };
 
-  const handlePostSubmit = async () => {
-    const newPost = {
+  const handlePostSubmit = () => {
+    if (!postContent.trim()) return;
+    const newPost: Post = {
       id: Date.now(),
       content: postContent,
       author: {
         walletAddress: userWalletAddress,
-        profilePicture: 'https://via.placeholder.com/10',
+        profilePicture: 'https://via.placeholder.com/40',
       },
       likes: 0,
       dislikes: 0,
-      likedBy: [] as string[],
-      dislikedBy: [] as string[],
+      likedBy: [],
+      dislikedBy: [],
       comments: 0,
       commentList: [],
     };
@@ -35,144 +62,65 @@ const CentralFeed: React.FC = () => {
     setPostContent('');
   };
 
-  const handleLike = (postId: number) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        if (post.likedBy.includes(userWalletAddress)) {
-          console.log('You have already liked this post.');
-          return post;
+  const handleInteraction = (postId: number, type: 'like' | 'dislike') => {
+    setPosts(
+      posts.map((post) => {
+        if (post.id === postId) {
+          if (
+            (type === 'like' && post.likedBy.includes(userWalletAddress)) ||
+            (type === 'dislike' && post.dislikedBy.includes(userWalletAddress))
+          ) {
+            return post;
+          }
+          return {
+            ...post,
+            [type === 'like' ? 'likes' : 'dislikes']:
+              post[type === 'like' ? 'likes' : 'dislikes'] + 1,
+            [type === 'like' ? 'likedBy' : 'dislikedBy']: [
+              ...(type === 'like' ? post.likedBy : post.dislikedBy),
+              userWalletAddress,
+            ],
+          };
         }
-
-        return {
-          ...post,
-          likes: post.likes + 1,
-          likedBy: [...post.likedBy, userWalletAddress],
-        };
-      }
-      return post;
-    }));
+        return post;
+      })
+    );
   };
 
-  const handleDislike = (postId: number) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        if (post.dislikedBy.includes(userWalletAddress)) {
-          console.log('You have already disliked this post.');
-          return post;
-        }
-
-        return {
-          ...post,
-          dislikes: post.dislikes + 1,
-          dislikedBy: [...post.dislikedBy, userWalletAddress],
-        };
-      }
-      return post;
+  const handleCommentInputChange = (postId: number, content: string) => {
+    setCommentInputState((prevState) => ({
+      ...prevState,
+      [postId]: content,
     }));
   };
 
   const handleComment = (postId: number, commentContent: string) => {
-    setPosts(posts.map(post =>
-      post.id === postId
-        ? {
-            ...post,
-            comments: post.comments + 1,
-            commentList: [...post.commentList, {
-              id: Date.now(),
-              content: commentContent,
-              author: userWalletAddress,
-              replies: [], // Initialize replies as an empty array
-              likes: 0,
-              dislikes: 0,
-              likedBy: [],
-              dislikedBy: [],
-            }]
-          }
-        : post
-    ));
-    setCommentInput('');
-    setCommentBoxVisible((prevState: any) => ({ ...prevState, [postId]: false }));
-  };
-
-  const handleCommentLike = (postId: number, commentId: number) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          commentList: post.commentList.map((comment: { id: number; likedBy: string | string[]; likes: number; }) => {
-            if (comment.id === commentId) {
-              if (comment.likedBy.includes(userWalletAddress)) {
-                return comment;
-              }
-              return {
-                ...comment,
-                likes: comment.likes + 1,
-                likedBy: Array.isArray(comment.likedBy) ? [...comment.likedBy, userWalletAddress] : [userWalletAddress],
-              };
-            }
-            return comment;
-          })
-        };
-      }
-      return post;
-    }));
-  };
-
-  const handleCommentDislike = (postId: number, commentId: number) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          commentList: post.commentList.map((comment: { id: number; dislikedBy: string | string[]; dislikes: number; }) => {
-            if (comment.id === commentId) {
-              if (comment.dislikedBy.includes(userWalletAddress)) {
-                return comment;
-              }
-              return {
-                ...comment,
-                dislikes: comment.dislikes + 1,
-                dislikedBy: Array.isArray(comment.dislikedBy) ? [...comment.dislikedBy, userWalletAddress] : [userWalletAddress],
-              };
-            }
-            return comment;
-          })
-        };
-      }
-      return post;
-    }));
-  };
-
-  const handleReply = (postId: number, commentId: number, replyContent: string) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          commentList: post.commentList.map((comment: { id: number; replies: any; }) => {
-            if (comment.id === commentId) {
-              return {
-                ...comment,
-                replies: [...comment.replies, {
+    if (!commentContent.trim()) return;
+    setPosts(
+      posts.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              comments: post.comments + 1,
+              commentList: [
+                ...post.commentList,
+                {
                   id: Date.now(),
-                  content: replyContent,
+                  content: commentContent,
                   author: userWalletAddress,
-                }]
-              };
+                },
+              ],
             }
-            return comment;
-          })
-        };
-      }
-      return post;
-    }));
+          : post
+      )
+    );
+    setCommentInputState((prevState) => ({ ...prevState, [postId]: '' }));
+    setCommentBoxVisible((prevState) => ({ ...prevState, [postId]: false }));
   };
 
   const toggleCommentBox = (postId: number) => {
-    setCommentBoxVisible((prevState: any[]) => ({ ...prevState, [postId]: !prevState[postId] }));
+    setCommentBoxVisible((prevState) => ({ ...prevState, [postId]: !prevState[postId] }));
   };
-
-  function handleShare(id: any): void {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <div className="central-feed">
@@ -209,10 +157,16 @@ const CentralFeed: React.FC = () => {
                 </div>
                 <p className="post-content">{post.content}</p>
                 <div className="post-actions">
-                  <button className="like-button" onClick={() => handleLike(post.id)}>
+                  <button
+                    className="like-button"
+                    onClick={() => handleInteraction(post.id, 'like')}
+                  >
                     <FaHeart /> {post.likes}
                   </button>
-                  <button className="dislike-button" onClick={() => handleDislike(post.id)}>
+                  <button
+                    className="dislike-button"
+                    onClick={() => handleInteraction(post.id, 'dislike')}
+                  >
                     <FaThumbsDown /> {post.dislikes}
                   </button>
                   <button
@@ -221,61 +175,29 @@ const CentralFeed: React.FC = () => {
                   >
                     <FaComment /> {post.comments}
                   </button>
-                  <button className="share-button" onClick={() => handleShare(post.id)}>
+                  <button className="share-button">
                     <FaShare />
                   </button>
                 </div>
 
-                {/* Comment Input Section */}
                 {commentBoxVisible[post.id] && (
                   <div className="comments-section">
                     <textarea
                       className="comment-input"
-                      value={commentInput}
-                      onChange={(e) => setCommentInput(e.target.value)}
+                      value={commentInputState[post.id] || ''}
+                      onChange={(e) => handleCommentInputChange(post.id, e.target.value)}
                       placeholder="Write a comment..."
                     />
                     <button
                       className="comment-submit-button"
-                      onClick={() => handleComment(post.id, commentInput)}
+                      onClick={() => handleComment(post.id, commentInputState[post.id])}
                     >
                       Add Comment
                     </button>
-                    {post.commentList.map((comment: any) => (
+                    {post.commentList.map((comment) => (
                       <div key={comment.id} className="comment">
-                        <div className="comment-header">
-                          <span className="comment-author">{comment.author}</span>
-                          <div className="comment-actions">
-                            <button onClick={() => handleCommentLike(post.id, comment.id)}>
-                              <FaThumbsUp /> {comment.likes}
-                            </button>
-                            <button onClick={() => handleCommentDislike(post.id, comment.id)}>
-                              <FaThumbsDown /> {comment.dislikes}
-                            </button>
-                          </div>
-                        </div>
+                        <span className="comment-author">{comment.author}</span>
                         <p className="comment-content">{comment.content}</p>
-
-                        {/* Nested replies */}
-                        {comment.replies?.map((reply: any) => (
-                          <div key={reply.id} className="reply">
-                            <span className="reply-author">{reply.author}</span>
-                            <p className="reply-content">{reply.content}</p>
-                          </div>
-                        ))}
-
-                        {/* Reply to comment */}
-                        <textarea
-                          className="reply-input"
-                          placeholder="Reply..."
-                          onChange={(e) => setCommentInput(e.target.value)}
-                        />
-                        <button
-                          className="reply-submit-button"
-                          onClick={() => handleReply(post.id, comment.id, commentInput)}
-                        >
-                          Reply
-                        </button>
                       </div>
                     ))}
                   </div>
