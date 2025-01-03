@@ -1,31 +1,36 @@
 import React, { useState } from 'react';
 import './Header.css';
 import { FaSearch } from 'react-icons/fa';
-
-import Deso from 'deso-protocol';
-
+import * as Deso from 'deso-protocol';  // Import the module
 
 const Header: React.FC = () => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-
+  // Handle wallet connection
   const connectWallet = async () => {
     try {
-      const response = await desoInstance.identity.login();
-      const address = response.key;
-      setWalletConnected(true);
-      setWalletAddress(address);
-      console.log('Wallet connected:', address);
+      const response = await Deso.identity.login(); // Call login directly on Deso
+      console.log('Login response:', response); // Log the response to inspect structure
+      
+      if (response && response.key) {
+        const address = response.key;
+        setWalletConnected(true);
+        setWalletAddress(address);
+        console.log('Wallet connected:', address);
+      } else {
+        console.error('Response does not contain expected "key" field. Response:', response);
+      }
     } catch (error) {
       console.error('Error connecting wallet:', error);
     }
   };
 
+  // Handle wallet disconnection
   const disconnectWallet = async () => {
     try {
-      await desoInstance.identity.logout();
+      await Deso.identity.logout(); // Call logout directly on Deso
       setWalletConnected(false);
       setWalletAddress(null);
       console.log('Wallet disconnected');
@@ -34,6 +39,7 @@ const Header: React.FC = () => {
     }
   };
 
+  // Handle search
   const handleSearch = () => {
     console.log('Search term:', searchTerm);
   };
@@ -61,7 +67,9 @@ const Header: React.FC = () => {
         </div>
         <button className="wallet-button" onClick={walletConnected ? disconnectWallet : connectWallet}>
           {walletConnected ? (
-            <span className="wallet-address">{walletAddress?.substring(0, 6)}...{walletAddress?.substring(walletAddress.length - 4)}</span>
+            <span className="wallet-address">
+              {walletAddress?.substring(0, 6)}...{walletAddress?.substring(walletAddress.length - 4)}
+            </span>
           ) : (
             'Connect Wallet'
           )}
