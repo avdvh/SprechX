@@ -11,7 +11,7 @@
     "@types/react": "^18.3.7",
     "@types/react-dom": "^18.3.0",
     "@types/web3": "^1.0.20",
-    "deso-protocol": "^1.1.15",
+    "deso-protocol": "^1.1.14",
     "ethers": "^6.13.4",
     "firebase": "^11.0.1",
     "jest": "^27.5.1",
