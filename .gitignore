@@ -37,3 +37,4 @@ Thumbs.db
 
 # General env files
 .env
+node_modules
