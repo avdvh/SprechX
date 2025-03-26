@@ -40,9 +40,17 @@ Use the cryptography library (already installed with requirements.txt) to genera
 #### `key = Fernet.generate_key()`
 #### `print(key.decode())`  # Copy and paste this into ENCRYPTION_KEY in .env
 
+### <ins>To start the Backend run following in Backend directory:</ins>
+
+#### `python app.py`
+
 ## 2️⃣ Frontend (React + TypeScript)
 
 ### <ins>To Install Dependencies run following command in frontend directory:</ins>
 
 #### `npm install`
+
+### <ins>To start the Frontend run following in Frontend directory:</ins>
+
+#### `npm start`
 
