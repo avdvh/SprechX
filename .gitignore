@@ -4,11 +4,12 @@
 *.pyo
 *.log
 
-# Ignore backend secrets
+# Ignore backend secrets and environments
 Backend/secure/
 Backend/*.env
 Backend/__pycache__/
 Backend/secure/key_seed.db
+Backend/venv/
 
 # Ignore Python virtual environment
 deso_venv/
