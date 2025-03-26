@@ -9,19 +9,19 @@
 #### `venv\Scripts\activate`  # Activate the environment (Windows)
 #### `pip install -r requirements.txt`  # Install dependencies
 
-### Create a DeSo Account:
+### <ins>Create a DeSo Account:</ins>
 
 Go to [deso website](https://test.deso.org) and create an account.
 
 Complete your profile using [update-profile](https://test.deso.org/update-profile).
 
-### To Set Up Secure Storage for Sensitive Data run following commands in Backend directory:
+### <ins>To Set Up Secure Storage for Sensitive Data run following commands in Backend directory:</ins>
 
 #### `mkdir secure`  # Create a secure directory
 #### `cd secure`
 #### `echo > key_seed.db`  # Create an empty key_seed.db file
 
-### Create a .env File in secure/ :
+### <ins>Create a .env File in secure/ :</ins>
 
 Create a .env file inside the secure folder with the following content:
 
@@ -32,7 +32,7 @@ Create a .env file inside the secure folder with the following content:
 #### DESO_INDEX="0"
 #### ENCRYPTION_KEY=""
 
-### Generate an Encryption Key: 
+### <ins>Generate an Encryption Key:</ins>
 
 Use the cryptography library (already installed with requirements.txt) to generate an encryption key:
 
@@ -42,7 +42,7 @@ Use the cryptography library (already installed with requirements.txt) to genera
 
 ## 2️⃣ Frontend (React + TypeScript)
 
-### To Install Dependencies run following command in frontend directory:
+### <ins>To Install Dependencies run following command in frontend directory:</ins>
 
 #### `npm install`
 
