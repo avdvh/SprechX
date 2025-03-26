@@ -4,7 +4,7 @@
 
 ### To Create Python Environment and Install Dependencies run following commands in project directory:
 
-#### `python -m venv venv`  # Create a virtual environment\
+#### `python -m venv venv`  # Create a virtual environment
 #### `source venv/bin/activate`   Activate the environment (Linux/macOS)
 #### `venv\Scripts\activate`  # Activate the environment (Windows)
 #### `pip install -r requirements.txt`  # Install dependencies
@@ -25,7 +25,7 @@ Complete your profile using [update-profile](https://test.deso.org/update-profil
 
 Create a .env file inside the secure folder with the following content:
 
-DESO_SEED_PHRASE_OR_HEX=""  # Paste your DeSo seed phrase here
+DESO_SEED_PHRASE_OR_HEX=""  # Paste your DeSo seed phrase here\
 DESO_NODE_URL="https://test.deso.org"
 TESTNET=True
 DESO_PASSPHRASE=""
