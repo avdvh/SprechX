@@ -2,14 +2,14 @@
 
 ## 1️⃣ Backend (Python + Flask)
 
-### To Create Python Environment and Install Dependencies run following commands in project directory:
+### <u>To Create Python Environment and Install Dependencies run following commands in project directory:</u>
 
 #### `python -m venv venv`  # Create a virtual environment
 #### `source venv/bin/activate`   Activate the environment (Linux/macOS)
 #### `venv\Scripts\activate`  # Activate the environment (Windows)
 #### `pip install -r requirements.txt`  # Install dependencies
 
-### Create a DeSo Account
+### Create a DeSo Account:
 
 Go to [deso website](https://test.deso.org) and create an account.
 
@@ -21,7 +21,7 @@ Complete your profile using [update-profile](https://test.deso.org/update-profil
 #### `cd secure`
 #### `echo > key_seed.db`  # Create an empty key_seed.db file
 
-### Create a .env File in secure/
+### Create a .env File in secure/ :
 
 Create a .env file inside the secure folder with the following content:
 
@@ -32,7 +32,7 @@ Create a .env file inside the secure folder with the following content:
 #### DESO_INDEX="0"
 #### ENCRYPTION_KEY=""
 
-### Generate an Encryption Key
+### Generate an Encryption Key: 
 
 Use the cryptography library (already installed with requirements.txt) to generate an encryption key:
 
