@@ -11,7 +11,7 @@ Backend/__pycache__/
 Backend/secure/key_seed.db
 
 # Ignore Python virtual environment
-deso-env/
+deso_venv/
 venv/
 env/
 
