@@ -1,3 +1,5 @@
+SprechX is a decentralized social media platform built on blockchain technology to champion free expression and user autonomy, directly addressing the censorship and data control issues of centralized platforms. By integrating with DeFi mechanisms, it allows users to authenticate securely with their digital wallets, ensuring privacy and complete ownership over their immutable, on-chain content. While technologically robust, SprechX provides a familiar and intuitive user experience with features like multimedia posts, profiles, and community engagement tools. The platform is designed to foster a transparent, censorship-resistant environment for open discourse, challenging the traditional social media model by placing power and content control firmly back into the hands of the users.
+
 # 🔧 Setup
 
 ## 1️⃣ Backend (Python + Flask)
@@ -53,4 +55,5 @@ Use the cryptography library (already installed with requirements.txt) to genera
 ### <ins>To start the Frontend run following in Frontend directory:</ins>
 
 #### `npm start`
+
 
