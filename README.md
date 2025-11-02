@@ -1,6 +1,6 @@
-# 🔧 Setup
+#  Setup
 
-## 1️⃣ Backend (Python + Flask)
+##  Backend (Python + Flask)
 
 ### <ins>To Create Python Environment and Install Dependencies run following commands in Backend directory:</ins>
 
@@ -44,7 +44,7 @@ Use the cryptography library (already installed with requirements.txt) to genera
 
 #### `python app.py`
 
-## 2️⃣ Frontend (React + TypeScript)
+##  Frontend (React + TypeScript)
 
 ### <ins>To Install Dependencies run following command in frontend directory:</ins>
 
@@ -53,4 +53,5 @@ Use the cryptography library (already installed with requirements.txt) to genera
 ### <ins>To start the Frontend run following in Frontend directory:</ins>
 
 #### `npm start`
+
 
