@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
           </a>
         </div>
         <div className="footer-info">
-          <p>&copy; 2024 SprechX. All rights reserved.</p>
+          <p>&copy; 2025 SprechX. All rights reserved.</p>
           <p>
             <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a>
           </p>
