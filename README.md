@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# 🔧 Setup
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1️⃣ Backend (Python + Flask)
 
-## Available Scripts
+### <ins>To Create Python Environment and Install Dependencies run following commands in Backend directory:</ins>
 
-In the project directory, you can run:
+#### `python -m venv venv`  # Create a virtual environment
+#### `source venv/bin/activate`   Activate the environment (Linux/macOS)
+#### `venv\Scripts\activate`  # Activate the environment (Windows)
+#### `pip install -r requirements.txt`  # Install dependencies
 
-### `npm start`
+### <ins>Create a DeSo Account:</ins>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Go to [deso website](https://test.deso.org) and create an account.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Complete your profile using [update-profile](https://test.deso.org/update-profile).
 
-### `npm test`
+### <ins>To Set Up Secure Storage for Sensitive Data run following commands in Backend directory:</ins>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### `mkdir secure`  # Create a secure directory
+#### `cd secure`
+#### `echo > key_seed.db`  # Create an empty key_seed.db file
 
-### `npm run build`
+### <ins>Create a .env File in secure/ :</ins>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a .env file inside the secure folder with the following content:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### DESO_SEED_PHRASE_OR_HEX=""  # Paste your DeSo seed phrase here
+#### DESO_NODE_URL="https://test.deso.org"
+#### TESTNET=True
+#### DESO_PASSPHRASE=""
+#### DESO_INDEX="0"
+#### ENCRYPTION_KEY=""
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### <ins>Generate an Encryption Key:</ins>
 
-### `npm run eject`
+Use the cryptography library (already installed with requirements.txt) to generate an encryption key:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### `from cryptography.fernet import Fernet`
+#### `key = Fernet.generate_key()`
+#### `print(key.decode())`  # Copy and paste this into ENCRYPTION_KEY in .env
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### <ins>To start the Backend run following in Backend directory:</ins>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### `python app.py`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 2️⃣ Frontend (React + TypeScript)
 
-## Learn More
+### <ins>To Install Dependencies run following command in frontend directory:</ins>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### `npm install`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### <ins>To start the Frontend run following in Frontend directory:</ins>
+
+#### `npm start`
+
