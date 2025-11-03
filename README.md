@@ -1,56 +1,71 @@
-# 🔧 Setup
+# SprechX
+
+SprechX is a decentralized social media platform built on blockchain technology to champion free expression and user autonomy, directly addressing the censorship and data control issues of centralized platforms. By integrating with DeFi mechanisms, it allows users to authenticate securely with their digital wallets, ensuring privacy and complete ownership over their immutable, on-chain content. While technologically robust, SprechX provides a familiar and intuitive user experience with features like multimedia posts, profiles, and community engagement tools. The platform is designed to foster a transparent, censorship-resistant environment for open discourse, challenging the traditional social media model by placing power and content control firmly back into the hands of the users.
+
+## 🔧 Setup
 
 ## 1️⃣ Backend (Python + Flask)
 
-### <ins>To Create Python Environment and Install Dependencies run following commands in Backend directory:</ins>
+### To Create Python Environment and Install Dependencies run following commands in Backend directory
 
 #### `python -m venv venv`  # Create a virtual environment
+
 #### `source venv/bin/activate`   Activate the environment (Linux/macOS)
+
 #### `venv\Scripts\activate`  # Activate the environment (Windows)
+
 #### `pip install -r requirements.txt`  # Install dependencies
 
-### <ins>Create a DeSo Account:</ins>
+### Create a DeSo Account
 
 Go to [deso website](https://test.deso.org) and create an account.
 
 Complete your profile using [update-profile](https://test.deso.org/update-profile).
 
-### <ins>To Set Up Secure Storage for Sensitive Data run following commands in Backend directory:</ins>
+### To Set Up Secure Storage for Sensitive Data run following commands in Backend directory
 
 #### `mkdir secure`  # Create a secure directory
+
 #### `cd secure`
+
 #### `echo > key_seed.db`  # Create an empty key_seed.db file
 
-### <ins>Create a .env File in secure/ :</ins>
+### Create a .env File in secure/
 
 Create a .env file inside the secure folder with the following content:
 
 #### DESO_SEED_PHRASE_OR_HEX=""  # Paste your DeSo seed phrase here
+
 #### DESO_NODE_URL="https://test.deso.org"
+
 #### TESTNET=True
+
 #### DESO_PASSPHRASE=""
+
 #### DESO_INDEX="0"
+
 #### ENCRYPTION_KEY=""
 
-### <ins>Generate an Encryption Key:</ins>
+### Generate an Encryption Key
 
 Use the cryptography library (already installed with requirements.txt) to generate an encryption key:
 
 #### `from cryptography.fernet import Fernet`
+
 #### `key = Fernet.generate_key()`
+
 #### `print(key.decode())`  # Copy and paste this into ENCRYPTION_KEY in .env
 
-### <ins>To start the Backend run following in Backend directory:</ins>
+### To start the Backend run following in Backend directory
 
 #### `python app.py`
 
 ## 2️⃣ Frontend (React + TypeScript)
 
-### <ins>To Install Dependencies run following command in frontend directory:</ins>
+### To Install Dependencies run following command in frontend directory
 
 #### `npm install`
 
-### <ins>To start the Frontend run following in Frontend directory:</ins>
+### To start the Frontend run following in Frontend directory
 
 #### `npm start`
-
